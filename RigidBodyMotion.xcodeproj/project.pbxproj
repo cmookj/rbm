@@ -1,0 +1,520 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E953440292EB94C00AAB553 /* rbm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E95343E292EB94C00AAB553 /* rbm.cpp */; };
+		0E953441292EB94C00AAB553 /* rbm.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0E95343F292EB94C00AAB553 /* rbm.hpp */; };
+		0E953457292EE40C00AAB553 /* TestRigidBodyMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E953456292EE40C00AAB553 /* TestRigidBodyMotion.mm */; };
+		0E95345A293EC90100AAB553 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E953459293EC90100AAB553 /* Accelerate.framework */; };
+		0E95345C293EC94D00AAB553 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E95345B293EC94D00AAB553 /* Accelerate.framework */; };
+		0EE3BDB229B2BBFF003792D4 /* libRigidBodyMotion.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E95342A292EB3B500AAB553 /* libRigidBodyMotion.dylib */; platformFilters = (macos, ); };
+		0EE3BDB429B2BC14003792D4 /* libblat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE3BDB329B2BC14003792D4 /* libblat.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0E95344B292EBBBD00AAB553 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E953422292EB3B500AAB553 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E953429292EB3B500AAB553;
+			remoteInfo = RigidBodyMotionLibrary;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0E95342A292EB3B500AAB553 /* libRigidBodyMotion.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libRigidBodyMotion.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E95343C292EB4B500AAB553 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0E95343E292EB94C00AAB553 /* rbm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rbm.cpp; sourceTree = "<group>"; };
+		0E95343F292EB94C00AAB553 /* rbm.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rbm.hpp; sourceTree = "<group>"; };
+		0E953446292EBBBD00AAB553 /* TestRigidBodyMotion.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestRigidBodyMotion.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E953456292EE40C00AAB553 /* TestRigidBodyMotion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestRigidBodyMotion.mm; sourceTree = "<group>"; };
+		0E953459293EC90100AAB553 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		0E95345B293EC94D00AAB553 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.1.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
+		0EE3BDB329B2BC14003792D4 /* libblat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libblat.a; path = ../../../../../../usr/local/lib/libblat.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0E953428292EB3B500AAB553 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E95345A293EC90100AAB553 /* Accelerate.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E953443292EBBBD00AAB553 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EE3BDB429B2BC14003792D4 /* libblat.a in Frameworks */,
+				0EE3BDB229B2BBFF003792D4 /* libRigidBodyMotion.dylib in Frameworks */,
+				0E95345C293EC94D00AAB553 /* Accelerate.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E953421292EB3B500AAB553 = {
+			isa = PBXGroup;
+			children = (
+				0E953438292EB4B500AAB553 /* doc */,
+				0E95343A292EB4B500AAB553 /* include */,
+				0E95343C292EB4B500AAB553 /* README.md */,
+				0E95343D292EB4B500AAB553 /* src */,
+				0E953439292EB4B500AAB553 /* test */,
+				0E95342B292EB3B500AAB553 /* Products */,
+				0E953458293EC90000AAB553 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0E95342B292EB3B500AAB553 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E95342A292EB3B500AAB553 /* libRigidBodyMotion.dylib */,
+				0E953446292EBBBD00AAB553 /* TestRigidBodyMotion.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0E953438292EB4B500AAB553 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		0E953439292EB4B500AAB553 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				0E953456292EE40C00AAB553 /* TestRigidBodyMotion.mm */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		0E95343A292EB4B500AAB553 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				0E95343B292EB4B500AAB553 /* rbmlib */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		0E95343B292EB4B500AAB553 /* rbmlib */ = {
+			isa = PBXGroup;
+			children = (
+				0E95343F292EB94C00AAB553 /* rbm.hpp */,
+			);
+			path = rbmlib;
+			sourceTree = "<group>";
+		};
+		0E95343D292EB4B500AAB553 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0E95343E292EB94C00AAB553 /* rbm.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		0E953458293EC90000AAB553 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0EE3BDB329B2BC14003792D4 /* libblat.a */,
+				0E95345B293EC94D00AAB553 /* Accelerate.framework */,
+				0E953459293EC90100AAB553 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0E953426292EB3B500AAB553 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E953441292EB94C00AAB553 /* rbm.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0E953429292EB3B500AAB553 /* RigidBodyMotion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E953435292EB3B500AAB553 /* Build configuration list for PBXNativeTarget "RigidBodyMotion" */;
+			buildPhases = (
+				0E953426292EB3B500AAB553 /* Headers */,
+				0E953427292EB3B500AAB553 /* Sources */,
+				0E953428292EB3B500AAB553 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RigidBodyMotion;
+			productName = RigidBodyMotionLibrary;
+			productReference = 0E95342A292EB3B500AAB553 /* libRigidBodyMotion.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		0E953445292EBBBD00AAB553 /* TestRigidBodyMotion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E95344D292EBBBD00AAB553 /* Build configuration list for PBXNativeTarget "TestRigidBodyMotion" */;
+			buildPhases = (
+				0E953442292EBBBD00AAB553 /* Sources */,
+				0E953443292EBBBD00AAB553 /* Frameworks */,
+				0E953444292EBBBD00AAB553 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E95344C292EBBBD00AAB553 /* PBXTargetDependency */,
+			);
+			name = TestRigidBodyMotion;
+			productName = TestRigidBodyMotionLibrary;
+			productReference = 0E953446292EBBBD00AAB553 /* TestRigidBodyMotion.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0E953422292EB3B500AAB553 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					0E953429292EB3B500AAB553 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					0E953445292EBBBD00AAB553 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = 0E953425292EB3B500AAB553 /* Build configuration list for PBXProject "RigidBodyMotion" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0E953421292EB3B500AAB553;
+			productRefGroup = 0E95342B292EB3B500AAB553 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E953429292EB3B500AAB553 /* RigidBodyMotion */,
+				0E953445292EBBBD00AAB553 /* TestRigidBodyMotion */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0E953444292EBBBD00AAB553 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0E953427292EB3B500AAB553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E953440292EB94C00AAB553 /* rbm.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E953442292EBBBD00AAB553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E953457292EE40C00AAB553 /* TestRigidBodyMotion.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0E95344C292EBBBD00AAB553 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilters = (
+				macos,
+			);
+			target = 0E953429292EB3B500AAB553 /* RigidBodyMotion */;
+			targetProxy = 0E95344B292EBBBD00AAB553 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E953433292EB3B500AAB553 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0E953434292EB3B500AAB553 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0E953436292EB3B500AAB553 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PJMW65YB82;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					$SRCROOT/include/rbmlib,
+					"/usr/local/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+			};
+			name = Debug;
+		};
+		0E953437292EB3B500AAB553 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PJMW65YB82;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					$SRCROOT/include/rbmlib,
+					"/usr/local/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+			};
+			name = Release;
+		};
+		0E95344E292EBBBD00AAB553 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PJMW65YB82;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					$SRCROOT/include/rbmlib,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teaeles.TestRigidBodyMotionLibrary;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+			};
+			name = Debug;
+		};
+		0E95344F292EBBBD00AAB553 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PJMW65YB82;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					$SRCROOT/include/rbmlib,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teaeles.TestRigidBodyMotionLibrary;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0E953425292EB3B500AAB553 /* Build configuration list for PBXProject "RigidBodyMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E953433292EB3B500AAB553 /* Debug */,
+				0E953434292EB3B500AAB553 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E953435292EB3B500AAB553 /* Build configuration list for PBXNativeTarget "RigidBodyMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E953436292EB3B500AAB553 /* Debug */,
+				0E953437292EB3B500AAB553 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E95344D292EBBBD00AAB553 /* Build configuration list for PBXNativeTarget "TestRigidBodyMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E95344E292EBBBD00AAB553 /* Debug */,
+				0E95344F292EBBBD00AAB553 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0E953422292EB3B500AAB553 /* Project object */;
+}
