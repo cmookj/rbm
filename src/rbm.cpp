@@ -200,6 +200,11 @@ void SO3::_expm(double w1, double w2, double w3) {
 
 #pragma mark - SE(3)
 
+SE3::SE3() {
+    attitude = SO3();
+    position = vec3();
+}
+
 /**
  @brief Constructs SE3 from a rotation matrix and a position vector
  */
