@@ -130,6 +130,7 @@ template <typename T> bool similar(const T&, const T&);
 SO3  operator*(const SO3&, const SO3&);
 vec3 operator*(const SO3&, const vec3&);
 
+SO3  expm(const double, const double, const double);
 SO3  expm(const vec3&);
 vec3 logm(const SO3&);
 
@@ -143,6 +144,7 @@ interpolate(const std::vector<double>&, const std::vector<SO3>&, const vec3&, co
 
 SO3 rotation_interpolated(const double, const std::vector<double>&, const std::vector<SO3>&, const std::vector<std::vector<vec3>>&);
 
+SE3 expm(const double, const double, const double, const double, const double, const double);
 SE3 expm(const vec3&, const vec3&);
 
 SE3 operator*(SE3, SE3);

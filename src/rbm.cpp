@@ -395,6 +395,10 @@ vec3 gpw::geometry::operator*(const SO3& R, const vec3& v) {
     return vec3(move(Rv.elem()));
 }
 
+SO3 gpw::geometry::expm(const double w1, const double w2, const double w3) {
+    return SO3(w1, w2, w3);
+}
+
 SO3 gpw::geometry::expm(const vec3& w) {
     return SO3(w(1), w(2), w(3));
 }
@@ -551,6 +555,11 @@ SO3 gpw::geometry::rotation_interpolated(
                           abc[i][0] * tau * tau * tau + abc[i][1] * tau * tau +
                           abc[i][2] * tau
                       );
+}
+
+SE3 gpw::geometry::expm(const double w1, const double w2, const double w3,
+                        const double v1, const double v2, const double v3) {
+    return SE3 {w1, w2, w3, v1, v2, v3};
 }
 
 SE3 gpw::geometry::expm(const vec3& w, const vec3& v) {
