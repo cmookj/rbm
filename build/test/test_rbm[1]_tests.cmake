@@ -1,0 +1,7 @@
+add_test([=[SO3.ExponentialLogarithm]=]  /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test/test_rbm [==[--gtest_filter=SO3.ExponentialLogarithm]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[SO3.ExponentialLogarithm]=]  PROPERTIES WORKING_DIRECTORY /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[SO3.Projection]=]  /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test/test_rbm [==[--gtest_filter=SO3.Projection]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[SO3.Projection]=]  PROPERTIES WORKING_DIRECTORY /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[SE3.Creation]=]  /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test/test_rbm [==[--gtest_filter=SE3.Creation]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[SE3.Creation]=]  PROPERTIES WORKING_DIRECTORY /Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_rbm_TESTS SO3.ExponentialLogarithm SO3.Projection SE3.Creation)
