@@ -1,4 +1,0 @@
-SO3.ExponentialLogarithm 2 0.00436461
-SO3.Projection 4 0.00441466
-SE3.Creation 4 0.0044871
----

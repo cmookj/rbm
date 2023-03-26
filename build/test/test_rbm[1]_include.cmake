@@ -1,5 +1,0 @@
-if(EXISTS "/Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test/test_rbm[1]_tests.cmake")
-  include("/Users/cmookj/Documents/develop/projects/RigidBodyMotion/build/test/test_rbm[1]_tests.cmake")
-else()
-  add_test(test_rbm_NOT_BUILT test_rbm_NOT_BUILT)
-endif()
