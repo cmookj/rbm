@@ -16,6 +16,8 @@
 #include <limits>
 #include <numeric>
 
+#include <iostream>
+
 #if defined(_WIN32) || defined(_WIN64)
 
 #define NOMINMAX
@@ -35,11 +37,6 @@ SO3::SO3() : mat3{{{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}}} {}
 
 SO3::SO3(const std::initializer_list<std::initializer_list<double>> &l)
     : mat3{l} {}
-
-SO3::SO3(const array<double, 9> &el)
-    : mat3{{el[0], el[1], el[2]},
-           {el[3], el[4], el[5]},
-           {el[6], el[7], el[8]}} {}
 
 SO3::SO3(const double &w1, const double &w2, const double &w3) {
   _expm(w1, w2, w3);
@@ -151,18 +148,12 @@ SO3 SO3::euler_zyz(double q1, double q2, double q3) {
 }
 
 SO3 SO3::transpose() const {
-  SO3 R{{_elem[0], _elem[3], _elem[6]},
-        {_elem[1], _elem[4], _elem[7]},
-        {_elem[2], _elem[5], _elem[8]}};
-  return R;
+  return SO3{{_elem[0], _elem[1], _elem[2]},
+             {_elem[3], _elem[4], _elem[5]},
+             {_elem[6], _elem[7], _elem[8]}};
 }
 
-SO3 SO3::inv() const {
-  SO3 R{{_elem[0], _elem[3], _elem[6]},
-        {_elem[1], _elem[4], _elem[7]},
-        {_elem[2], _elem[5], _elem[8]}};
-  return R;
-}
+SO3 SO3::inv() const { return transpose(); }
 
 void SO3::_expm(double w1, double w2, double w3) {
   double theta = sqrt(w1 * w1 + w2 * w2 + w3 * w3);
@@ -366,12 +357,12 @@ mat3 gpw::geometry::skew(const vec3 &v) { return skew(v(1), v(2), v(3)); }
 
 SO3 gpw::geometry::operator*(const SO3 &R1, const SO3 &R2) {
   auto R = gpw::blat::operator*(R1, R2);
-  return SO3(move(R));
+  return SO3(std::move(R));
 }
 
 vec3 gpw::geometry::operator*(const SO3 &R, const vec3 &v) {
   auto Rv = gpw::blat::operator*(R, v);
-  return vec3(move(Rv.elem()));
+  return vec3(std::move(Rv.elem()));
 }
 
 SO3 gpw::geometry::expm(const double w1, const double w2, const double w3) {
@@ -421,12 +412,9 @@ vec3 gpw::geometry::logm(const SO3 &R) {
   return w;
 }
 
-SO3 gpw::geometry::transpose(const SO3 &R) {
-  mat3 M{R};
-  return SO3{gpw::blat::transpose(M)};
-}
+SO3 gpw::geometry::transpose(const SO3 &R) { return R.transpose(); }
 
-SO3 gpw::geometry::inv(const SO3 &R) { return transpose(R); }
+SO3 gpw::geometry::inv(const SO3 &R) { return R.inv(); }
 
 vec3 gpw::geometry::geodesic(const SO3 &R1, const SO3 &R2) {
   return logm(transpose(R1) * R2);
@@ -537,6 +525,10 @@ SE3 gpw::geometry::expm(const double w1, const double w2, const double w3,
 SE3 gpw::geometry::expm(const vec3 &w, const vec3 &v) { return SE3{w, v}; }
 
 SE3 gpw::geometry::operator*(SE3 a, SE3 b) { return a *= b; }
+
+SE3 gpw::geometry::inv(const SE3 &T) {
+  return SE3{inv(T.R()), -inv(T.R()) * T.p()};
+}
 
 bool gpw::geometry::operator==(const SE3 &T, const gpw::blat::mat<4, 4> &M) {
   return (T.elem() == M.elem());

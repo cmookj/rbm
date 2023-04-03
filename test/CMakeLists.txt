@@ -12,9 +12,9 @@ if (BUILD_TESTING)
             libgfortran.a # libopenblas requires link to _gfortran_concat_string
             )
     endif()
-
     target_link_libraries(test_rbm PRIVATE 
         rbm 
+        /usr/local/lib/libblat.a
         ${extra_libs}
         GTest::gtest_main)
 

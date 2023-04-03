@@ -29,6 +29,45 @@ TEST(SO3, TrivialConstruction) {
   for (std::size_t i = 1; i < 4; ++i)
     for (std::size_t j = 1; j < 4; ++j)
       EXPECT_NEAR(R2(i, j), I(i, j), 0.0001);
+
+  auto R3 = SO3{1., 2., 3.};
+  SO3 R_approx{
+      {-.6949, .7135, .0893}, {-.1920, -.3038, .9332}, {.6930, .6313, .3481}};
+
+  for (std::size_t i = 1; i < 4; ++i)
+    for (std::size_t j = 1; j < 4; ++j)
+      EXPECT_NEAR(R3(i, j), R_approx(i, j), 0.0001);
+}
+
+TEST(SO3, TransposeInverse) {
+  SO3 I{{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}};
+  SO3 I_inv = inv(I);
+
+  for (std::size_t i = 1; i < 4; ++i)
+    for (std::size_t j = 1; j < 4; ++j)
+      EXPECT_NEAR(I_inv(i, j), I(i, j), 0.0001);
+
+  SO3 R{1., 2., 3.};
+  // -.6949, .7135, .0893
+  // -.1920, -.3038, .9332
+  // .6930, .6313, .3481
+
+  SO3 R1 = R.transpose();
+  SO3 R2 = transpose(R);
+
+  for (std::size_t i = 1; i < 4; ++i)
+    for (std::size_t j = 1; j < 4; ++j) {
+      EXPECT_NEAR(R1(i, j), R(j, i), 0.0001);
+      EXPECT_NEAR(R1(i, j), R2(i, j), 0.0001);
+    }
+
+  SO3 I_3 = R * inv(R);
+
+  /*
+  for (std::size_t i = 1; i < 4; ++i)
+    for (std::size_t j = 1; j < 4; ++j)
+      EXPECT_NEAR(I_3(i, j), I(i, j), 0.0001);
+      */
 }
 
 TEST(SO3, ExponentialLogarithm) {
@@ -66,6 +105,20 @@ TEST(SE3, Creation) {
     EXPECT_NEAR(T.p(i), T_expected.p(i), 0.0001);
     for (std::size_t j = 1; j < 4; ++j)
       EXPECT_NEAR(T.R(i, j), T_expected.R(i, j), 0.0001);
+  }
+}
+
+TEST(SE3, Inverse) {
+  auto T = SE3{vec3{1., 2., 3.}, vec3{3., 2., 1.}};
+  auto Tinv = inv(T);
+  auto I_expected = T * Tinv;
+  auto I3x3 = SO3{{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1}};
+
+  for (std::size_t i = 1; i < 4; ++i) {
+    for (std::size_t j = 1; j < 4; ++j) {
+      EXPECT_NEAR(I_expected.R(i, j), I3x3(i, j), 0.0001);
+    }
+    EXPECT_NEAR(I_expected.p(i), 0., 0.0001);
   }
 }
 
