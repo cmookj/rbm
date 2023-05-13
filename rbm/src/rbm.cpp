@@ -80,17 +80,19 @@ SO3::SO3 (const vec3& v) { _expm (v (1), v (2), v (3)); }
  */
 SO3::SO3 (const mat3& M)
     : mat3 {
-          {{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}}
+          {{M (1, 1), M (1, 2), M (1, 3)},
+           {M (2, 1), M (2, 2), M (2, 3)},
+           {M (3, 1), M (3, 2), M (3, 3)}}
 } {
     double dtm = det (M);
     if (dtm != 0) {
         auto SVD = svd (M);
 
-        mat3 I = gpw::blat::identity<3>();
+        mat3 pmI = gpw::blat::identity<3>();
         if (dtm < 0.)
-            I (3, 3) = -1.;
+            pmI (3, 3) = -1.;
 
-        mat3 projection = SVD.V * I * gpw::blat::transpose (SVD.U);
+        mat3 projection = SVD.U * pmI * gpw::blat::transpose (SVD.V);
         _elem = projection.elem();
     }
 }
@@ -425,7 +427,7 @@ gpw::geometry::skew (const vec3& v) {
 SO3
 gpw::geometry::operator* (const SO3& R1, const SO3& R2) {
     auto R = gpw::blat::operator* (R1, R2);
-    return SO3 (std::move (R));
+    return SO3 (R);
 }
 
 vec3
@@ -496,9 +498,14 @@ gpw::geometry::inv (const SO3& R) {
     return R.inv();
 }
 
+SO3
+gpw::geometry::relative (const SO3& R1, const SO3& R2) {
+    return inv (R1) * R2;
+}
+
 vec3
 gpw::geometry::geodesic (const SO3& R1, const SO3& R2) {
-    return logm (transpose (R1) * R2);
+    return logm (relative (R1, R2));
 }
 
 vector<vector<vec3>>
@@ -631,6 +638,11 @@ gpw::geometry::operator* (SE3 a, SE3 b) {
 SE3
 gpw::geometry::inv (const SE3& T) {
     return SE3 {inv (T.R()), -inv (T.R()) * T.p()};
+}
+
+SE3
+gpw::geometry::relative (const SE3& T1, const SE3& T2) {
+    return SE3 {inv (T1) * T2};
 }
 
 bool

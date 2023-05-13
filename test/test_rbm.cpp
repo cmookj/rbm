@@ -63,6 +63,46 @@ TEST (SO3, Construction) {
     EXPECT_NEAR (R1 (3, 3), 1., tol);
 }
 
+TEST (SO3, Multiplication) {
+    SO3 R1 {1, 3, 5};
+
+    EXPECT_NEAR (R1 (1, 1), 0.93527384, 0.000001);
+    EXPECT_NEAR (R1 (1, 2), 0.30904994, 0.000001);
+    EXPECT_NEAR (R1 (1, 3), -0.17248473, 0.000001);
+    EXPECT_NEAR (R1 (2, 1), -0.29762768, 0.000001);
+    EXPECT_NEAR (R1 (2, 2), 0.95050352, 0.000001);
+    EXPECT_NEAR (R1 (2, 3), 0.08922342, 0.000001);
+    EXPECT_NEAR (R1 (3, 1), 0.19152184, 0.000001);
+    EXPECT_NEAR (R1 (3, 2), -0.0321121, 0.000001);
+    EXPECT_NEAR (R1 (3, 3), 0.98096289, 0.000001);
+
+    SO3 R2 {-1, -2, -3};
+
+    EXPECT_NEAR (R2 (1, 1), -0.69492056, 0.000001);
+    EXPECT_NEAR (R2 (1, 2), -0.19200697, 0.000001);
+    EXPECT_NEAR (R2 (1, 3), 0.69297817, 0.000001);
+    EXPECT_NEAR (R2 (2, 1), 0.71352099, 0.000001);
+    EXPECT_NEAR (R2 (2, 2), -0.30378504, 0.000001);
+    EXPECT_NEAR (R2 (2, 3), 0.6313497, 0.000001);
+    EXPECT_NEAR (R2 (3, 1), 0.08929286, 0.000001);
+    EXPECT_NEAR (R2 (3, 2), 0.93319235, 0.000001);
+    EXPECT_NEAR (R2 (3, 3), 0.34810748, 0.000001);
+
+    SO3 R12 = R1 * R2;
+
+    EXPECT_NEAR (R12 (1, 1), -0.44482905, 0.000001);
+    EXPECT_NEAR (R12 (1, 2), -0.43442528, 0.000001);
+    EXPECT_NEAR (R12 (1, 3), 0.78319971, 0.000001);
+
+    EXPECT_NEAR (R12 (2, 1), 0.89299882, 0.000001);
+    EXPECT_NEAR (R12 (2, 2), -0.14833955, 0.000001);
+    EXPECT_NEAR (R12 (2, 3), 0.42490997, 0.000001);
+
+    EXPECT_NEAR (R12 (3, 1), -0.06841214, 0.000001);
+    EXPECT_NEAR (R12 (3, 2), 0.88840872, 0.000001);
+    EXPECT_NEAR (R12 (3, 3), 0.45392701, 0.000001);
+}
+
 TEST (SO3, TransposeInverse) {
     SO3 I {
         {1., 0., 0.},
@@ -89,28 +129,47 @@ TEST (SO3, TransposeInverse) {
             EXPECT_NEAR (R1 (i, j), R2 (i, j), 0.0001);
         }
 
-    SO3 I_3 = R * inv (R);
-
-    /*
+    SO3 R_inv = inv (R);
     for (std::size_t i = 1; i < 4; ++i)
-      for (std::size_t j = 1; j < 4; ++j)
-        EXPECT_NEAR(I_3(i, j), I(i, j), 0.0001);
-        */
+        for (std::size_t j = 1; j < 4; ++j)
+            EXPECT_NEAR (R (i, j), R_inv (j, i), 0.0001);
+
+    SO3 I_3 = R * R_inv;
+
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            EXPECT_NEAR (I_3 (i, j), I (i, j), 0.0001);
+}
+
+TEST (SO3, RelativeOrientation) {
+    SO3 R1 {1, 3, 5};
+    SO3 R {-1, -2, -3};
+    SO3 R2 = R1 * R;
+    SO3 R_calc = relative (R1, R2);
+
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            EXPECT_NEAR (R (i, j), R_calc (i, j), 0.00001);
 }
 
 TEST (SO3, Projection) {
+    SO3 R_orig {1, 3, 5};
     mat3 M {};
     mat3 error {
-        { 0.0001,  0.0002, -0.0001},
-        {-0.0001, -0.0002,  0.0002},
-        { 0.0002,  0.0001, -0.0001}
+        { 0.0000001,  0.0000002, -0.0000001},
+        {-0.0000001, -0.0000002,  0.0000002},
+        { 0.0000002,  0.0000001, -0.0000001}
     };
-    M += error;
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            M (i, j) = R_orig (i, j) + error (i, j);
 
     EXPECT_NE (det (M), 1.);
 
     SO3 R {M};
-    EXPECT_FLOAT_EQ (det (R), 1.);
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            EXPECT_NEAR (R_orig (i, j), R (i, j), 0.00001);
 }
 
 TEST (SO3, ExponentialLogarithm) {
