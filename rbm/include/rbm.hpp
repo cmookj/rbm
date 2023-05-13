@@ -37,33 +37,40 @@ using mat3 = gpw::blat::mat<3, 3>;
  */
 class SO3 : public mat3 {
 public:
-  // Default constructor and destructor
-  SO3();
-  virtual ~SO3() = default;
+    // Default constructor and destructor
+    SO3();
+    virtual ~SO3() = default;
 
-  // Copy constructor and assignment
-  SO3(const SO3 &) = default;
-  SO3 &operator=(const SO3 &) = default;
+    // Copy constructor and assignment
+    SO3 (const SO3&) = default;
+    SO3&
+    operator= (const SO3&) = default;
 
-  // Move constructor and assignment
-  SO3(SO3 &&) noexcept = default;
-  SO3 &operator=(SO3 &&) noexcept = default;
+    // Move constructor and assignment
+    SO3 (SO3&&) noexcept = default;
+    SO3&
+    operator= (SO3&&) noexcept = default;
 
-  // Other constructors
-  SO3(const std::initializer_list<std::initializer_list<double>> &);
-  SO3(const double &, const double &, const double &);
-  SO3(const vec3 &, const double &);
-  SO3(const vec3 &);
-  SO3(const mat3 &);
+    // Other constructors
+    SO3 (const std::initializer_list<std::initializer_list<double>>&);
+    SO3 (const double&, const double&, const double&);
+    SO3 (const vec3&, const double&);
+    SO3 (const vec3&);
+    SO3 (const mat3&);
 
-  static SO3 euler_zyx(double, double, double);
-  static SO3 euler_zyz(double, double, double);
+    static SO3
+    euler_zyx (double, double, double);
+    static SO3
+    euler_zyz (double, double, double);
 
-  SO3 transpose() const;
-  SO3 inv() const;
+    SO3
+    transpose () const;
+    SO3
+    inv () const;
 
 private:
-  void _expm(double, double, double);
+    void
+    _expm (double, double, double);
 };
 
 #pragma mark - SE(3)
@@ -73,90 +80,139 @@ private:
  */
 class SE3 {
 private:
-  SO3 attitude;
-  vec3 position;
+    SO3 attitude;
+    vec3 position;
 
 public:
-  // Default constructor and destructor
-  SE3();
-  virtual ~SE3() = default;
+    // Default constructor and destructor
+    SE3();
+    virtual ~SE3() = default;
 
-  // Copy constructor and assignment
-  SE3(const SE3 &) = default;
-  SE3 &operator=(const SE3 &) = default;
+    // Copy constructor and assignment
+    SE3 (const SE3&) = default;
+    SE3&
+    operator= (const SE3&) = default;
 
-  // Move constructor and assignment
-  SE3(SE3 &&) noexcept = default;
-  SE3 &operator=(SE3 &&) noexcept = default;
+    // Move constructor and assignment
+    SE3 (SE3&&) noexcept = default;
+    SE3&
+    operator= (SE3&&) noexcept = default;
 
-  // Other constructors
-  SE3(const SO3 &, const vec3 &);
-  SE3(const vec3 &, const vec3 &);
-  SE3(const double &, const double &, const double &, const double &,
-      const double &, const double &);
+    // Other constructors
+    SE3 (const SO3&, const vec3&);
+    SE3 (const vec3&, const vec3&);
+    SE3 (const double&, const double&, const double&, const double&, const double&, const double&);
 
-  const SO3 &R() const;
-  void set_R(const SO3 &);
-  const vec3 &p() const;
-  void set_p(const vec3 &);
+    const SO3&
+    R () const;
+    void
+    set_R (const SO3&);
+    const vec3&
+    p () const;
+    void
+    set_p (const vec3&);
 
-  const double &R(const std::size_t, const std::size_t) const;
-  double &R(const std::size_t, const std::size_t);
+    const double&
+    R (const std::size_t, const std::size_t) const;
+    double&
+    R (const std::size_t, const std::size_t);
 
-  const double &p(const std::size_t) const;
-  double &p(const std::size_t);
+    const double&
+    p (const std::size_t) const;
+    double&
+    p (const std::size_t);
 
-  SE3 &operator*=(const SE3 &);
-  vec3 operator*(const vec3 &) const;
+    SE3&
+    operator*= (const SE3&);
+    vec3
+    operator* (const vec3&) const;
 
-  void print(std::ostream &strm = std::cout) const;
+    void
+    print (std::ostream& strm = std::cout) const;
 
-  std::vector<double> elem() const;
+    std::vector<double>
+    elem () const;
 
 private:
-  void _expm(vec3, vec3);
+    void _expm (vec3, vec3);
 };
 
 #pragma mark - OTHER FUNCTIONS
 
-vec3 cross(const vec3 &, const vec3 &);
+vec3
+cross (const vec3&, const vec3&);
 
-mat3 skew(const double &, const double &, const double &);
-mat3 skew(const vec3 &);
+mat3
+skew (const double&, const double&, const double&);
+mat3
+skew (const vec3&);
 
-template <typename T> bool similar(const T &, const T &);
+template <typename T>
+bool
+similar (const T&, const T&);
 
-SO3 operator*(const SO3 &, const SO3 &);
-vec3 operator*(const SO3 &, const vec3 &);
+SO3
+operator* (const SO3&, const SO3&);
+vec3
+operator* (const SO3&, const vec3&);
 
-SO3 expm(const double, const double, const double);
-SO3 expm(const vec3 &);
-vec3 logm(const SO3 &);
+SO3
+expm (const double, const double, const double);
+SO3
+expm (const vec3&);
+vec3
+logm (const SO3&);
 
-SO3 transpose(const SO3 &);
-SO3 inv(const SO3 &);
+SO3
+transpose (const SO3&);
+SO3
+inv (const SO3&);
 
-vec3 geodesic(const SO3 &, const SO3 &);
+/*
+ @brief Calculate relative orientation of the second w.r.t. the first.
+ */
+SO3
+relative (const SO3&, const SO3&);
 
-std::vector<std::vector<vec3>> interpolate(const std::vector<double> &,
-                                           const std::vector<SO3> &,
-                                           const vec3 &, const vec3 &);
+vec3
+geodesic (const SO3&, const SO3&);
 
-SO3 rotation_interpolated(const double, const std::vector<double> &,
-                          const std::vector<SO3> &,
-                          const std::vector<std::vector<vec3>> &);
+std::vector<std::vector<vec3>>
+interpolate (const std::vector<double>&, const std::vector<SO3>&, const vec3&, const vec3&);
 
-SE3 expm(const double, const double, const double, const double, const double,
-         const double);
-SE3 expm(const vec3 &, const vec3 &);
+SO3
+rotation_interpolated (const double, const std::vector<double>&, const std::vector<SO3>&, const std::vector<std::vector<vec3>>&);
 
-SE3 operator*(SE3, SE3);
-SE3 inv(const SE3 &);
+SE3
+expm (
+    const double,
+    const double,
+    const double,
+    const double,
+    const double,
+    const double
+);
+SE3
+expm (const vec3&, const vec3&);
 
-bool operator==(const SE3 &, const gpw::blat::mat<4, 4> &);
-bool operator==(const gpw::blat::mat<4, 4> &, const SE3 &);
-bool operator!=(const SE3 &, const gpw::blat::mat<4, 4> &);
-bool operator!=(const gpw::blat::mat<4, 4> &, const SE3 &);
+SE3 operator* (SE3, SE3);
+SE3
+inv (const SE3&);
+
+/*
+ @brief Calculate relative pose of the second w.r.t. the first.
+ */
+SE3
+relative (const SE3&, const SE3&);
+
+bool
+operator== (const SE3&, const gpw::blat::mat<4, 4>&);
+bool
+operator== (const gpw::blat::mat<4, 4>&, const SE3&);
+bool
+operator!= (const SE3&, const gpw::blat::mat<4, 4>&);
+bool
+operator!= (const gpw::blat::mat<4, 4>&, const SE3&);
 
 } // namespace gpw::geometry
 

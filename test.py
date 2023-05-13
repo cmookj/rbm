@@ -16,4 +16,16 @@ print(T2)
 T = np.matmul(T1, T2)
 print(T)
 
+R3 = mr.MatrixExp3(mr.VecToso3(np.array([1, 3, 5])))
+print('R3')
+print(R3)
+R34 = mr.MatrixExp3(mr.VecToso3(np.array([-1, -2, -3])))
+print('R34')
+print(R34)
+R4 = np.matmul(R3, R34)
+print(R4)
+
+R34_calc = np.matmul(mr.RotInv(R3), R4)
+print(R34)
+print(R34_calc)
 
