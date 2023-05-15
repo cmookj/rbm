@@ -29,3 +29,16 @@ R34_calc = np.matmul(mr.RotInv(R3), R4)
 print(R34)
 print(R34_calc)
 
+print('Matrix Projection to SO3')
+R5 = mr.MatrixExp3(mr.VecToso3(np.array([3, 5, 7])))
+print('R5: {}', np.linalg.det(R5))
+print(R5)
+M6 = R5 + np.array([[0.0001, -0.0001, -0.0001],
+                    [-0.0001, 0.0001, 0.0001],
+                    [0.0001, 0.0001, -0.0001]])
+print('M6: {}', np.linalg.det(M6))
+print(M6)
+R6 = mr.ProjectToSO3(M6)
+print('R6: {}', np.linalg.det(R6))
+print(R6)
+

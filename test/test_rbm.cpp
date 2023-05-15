@@ -153,23 +153,47 @@ TEST (SO3, RelativeOrientation) {
 }
 
 TEST (SO3, Projection) {
-    SO3 R_orig {1, 3, 5};
-    mat3 M {};
-    mat3 error {
+    SO3 R1_org {1, 3, 5};
+    mat3 M1 {};
+    mat3 error1 {
         { 0.0000001,  0.0000002, -0.0000001},
         {-0.0000001, -0.0000002,  0.0000002},
         { 0.0000002,  0.0000001, -0.0000001}
     };
     for (std::size_t i = 1; i < 4; ++i)
         for (std::size_t j = 1; j < 4; ++j)
-            M (i, j) = R_orig (i, j) + error (i, j);
+            M1 (i, j) = R1_org (i, j) + error1 (i, j);
 
-    EXPECT_NE (det (M), 1.);
+    EXPECT_NE (det (M1), 1.);
 
-    SO3 R {M};
+    SO3 R1 {M1};
+    EXPECT_TRUE (std::abs (det (R1) - 1.) < std::abs (det (M1) - 1.));
+
     for (std::size_t i = 1; i < 4; ++i)
         for (std::size_t j = 1; j < 4; ++j)
-            EXPECT_NEAR (R_orig (i, j), R (i, j), 0.00001);
+            EXPECT_NEAR (R1_org (i, j), R1 (i, j), 0.00001);
+
+    SO3 R2_org {3, 5, 7};
+    // -0.73944516  0.11502181  0.66331806
+    //  0.59015865 -0.36334891  0.72089551
+    //  0.3239346   0.92452558  0.20079547
+    mat3 M2 {};
+    mat3 error2 {
+        { 0.0000001, -0.0000001, -0.0000001},
+        {-0.0000001,  0.0000001,  0.0000001},
+        { 0.0000001,  0.0000001, -0.0000001}
+    };
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            M2 (i, j) = R2_org (i, j) + error2 (i, j);
+
+    EXPECT_NE (det (M2), 1.);
+    SO3 R2 {M2};
+    EXPECT_TRUE (std::abs (det (R2) - 1.) < std::abs (det (M2) - 1.));
+
+    for (std::size_t i = 1; i < 4; ++i)
+        for (std::size_t j = 1; j < 4; ++j)
+            EXPECT_NEAR (R2_org (i, j), R2 (i, j), 0.00001);
 }
 
 TEST (SO3, ExponentialLogarithm) {
