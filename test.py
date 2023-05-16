@@ -1,6 +1,9 @@
 import modern_robotics as mr
 import numpy as np 
 
+def print_header(str):
+    print('{:-^80}'.format('    ' + str + '    '))
+
 w1 = np.array([2, -6, 4])
 R1 = mr.MatrixExp3(mr.VecToso3(w1))
 p1 = np.array([3, 5, 7])
@@ -29,7 +32,7 @@ R34_calc = np.matmul(mr.RotInv(R3), R4)
 print(R34)
 print(R34_calc)
 
-print('Matrix Projection to SO3')
+print_header('Matrix Projection to SO3')
 R5 = mr.MatrixExp3(mr.VecToso3(np.array([3, 5, 7])))
 print('R5: {}', np.linalg.det(R5))
 print(R5)
@@ -42,3 +45,13 @@ R6 = mr.ProjectToSO3(M6)
 print('R6: {}', np.linalg.det(R6))
 print(R6)
 
+print_header('SE3 Coordinate Transformation')
+T12 = np.matmul(np.linalg.inv(T1), T2)
+print('T12')
+print(T12)
+
+print('T2')
+print(T2)
+
+print('T2')
+print(np.matmul(T1, T12))
