@@ -385,19 +385,25 @@ SE3::elem() const {
 
 #pragma mark - OTHER FUNCTIONS
 
+std::string
+gpw::geometry::to_string (const SE3& T) {
+    return to_string (T.R()) + '\n' + to_string (T.p());
+}
+
 template <typename T>
 bool
-gpw::geometry::similar (const T& a, const T& b) {
-    if (fabs (a - b) < numeric_limits<T>::epsilon())
+gpw::geometry::similar (const T& a, const T& b, const T tol) {
+    if (fabs (a - b) < tol)
         return true;
     else
         return false;
 }
 
 template bool
-gpw::geometry::similar<float> (const float&, const float&);
+gpw::geometry::similar<float> (const float&, const float&, const float tol);
+
 template bool
-gpw::geometry::similar<double> (const double&, const double&);
+gpw::geometry::similar<double> (const double&, const double&, const double tol);
 
 vec3
 gpw::geometry::cross (const vec3& a, const vec3& b) {
@@ -663,4 +669,20 @@ gpw::geometry::operator!= (const SE3& T, const gpw::blat::mat<4, 4>& M) {
 bool
 gpw::geometry::operator!= (const gpw::blat::mat<4, 4>& M, const SE3& T) {
     return !(M == T);
+}
+
+bool
+gpw::geometry::operator== (const SE3& T1, const SE3& T2) {
+    return (T1.R() == T2.R() && T1.p() == T2.p());
+}
+
+bool
+gpw::geometry::operator!= (const SE3& T1, const SE3& T2) {
+    return !(T1 == T2);
+}
+
+bool
+gpw::geometry::similar (const SE3& T1, const SE3& T2, const double tol) {
+    return gpw::blat::similar (T1.R(), T2.R(), tol) &&
+           gpw::blat::similar (T1.p(), T2.p(), tol);
 }

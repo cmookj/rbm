@@ -15,6 +15,7 @@
 #include <cmath>
 #include <initializer_list>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -139,6 +140,9 @@ private:
 
 #pragma mark - OTHER FUNCTIONS
 
+std::string
+to_string (const SE3&);
+
 vec3
 cross (const vec3&, const vec3&);
 
@@ -149,7 +153,7 @@ skew (const vec3&);
 
 template <typename T>
 bool
-similar (const T&, const T&);
+similar (const T&, const T&, const T tol = std::numeric_limits<T>::epsilon());
 
 SO3
 operator* (const SO3&, const SO3&);
@@ -207,12 +211,28 @@ relative (const SE3&, const SE3&);
 
 bool
 operator== (const SE3&, const gpw::blat::mat<4, 4>&);
+
 bool
 operator== (const gpw::blat::mat<4, 4>&, const SE3&);
+
 bool
 operator!= (const SE3&, const gpw::blat::mat<4, 4>&);
+
 bool
 operator!= (const gpw::blat::mat<4, 4>&, const SE3&);
+
+bool
+operator== (const SE3&, const SE3&);
+
+bool
+operator!= (const SE3&, const SE3&);
+
+bool
+similar (
+    const SE3&,
+    const SE3&,
+    const double tol = std::numeric_limits<double>::epsilon()
+);
 
 } // namespace gpw::geometry
 
