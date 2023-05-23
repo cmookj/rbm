@@ -682,6 +682,11 @@ gpw::geometry::operator!= (const SE3& T1, const SE3& T2) {
 }
 
 bool
+gpw::geometry::similar (const SO3& R1, const SO3& R2, const double tol) {
+    return gpw::blat::similar (R1, R2, tol);
+}
+
+bool
 gpw::geometry::similar (const SE3& T1, const SE3& T2, const double tol) {
     return gpw::blat::similar (T1.R(), T2.R(), tol) &&
            gpw::blat::similar (T1.p(), T2.p(), tol);

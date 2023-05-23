@@ -412,3 +412,16 @@ TEST (SE3, CoordinateTransformation) {
     // 0.06337132  0.08553622  0.99431767 -9.
     // clang-format on
 }
+
+TEST (SE3, RandomPose) {
+    auto I3 = SO3 {};
+    auto p3 = vec3 {};
+
+    auto T0 = SE3 {
+        vec3 {0., 0., 0.},
+         vec3 {0., 0., 0.}
+    };
+
+    EXPECT_TRUE (similar (T0.R(), I3));
+    EXPECT_TRUE (similar (T0.p(), p3));
+}
