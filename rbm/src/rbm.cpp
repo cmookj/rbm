@@ -17,6 +17,7 @@
 #include <numeric>
 
 #include <iostream>
+#include <sstream>
 
 #if defined(_WIN32) || defined(_WIN64)
 
@@ -30,6 +31,51 @@ const double M_PI_4 = 0.785398163397448309616;
 using namespace std;
 using namespace gpw::geometry;
 using namespace gpw::blat;
+
+int
+gpw::geometry::set_format (std::stringstream& strm, output_fmt fmt) {
+    int width;
+    int precision;
+
+    std::ios_base::fmtflags options;
+
+    switch (fmt) {
+    case output_fmt::sht:
+        options = std::ios_base::fixed;
+        precision = 2;
+        width = 8;
+        break;
+
+    case output_fmt::nml:
+        options = std::ios_base::fixed;
+        precision = 4;
+        width = 10;
+        break;
+
+    case output_fmt::ext:
+        options = std::ios_base::fixed;
+        precision = 8;
+        width = 14;
+        break;
+
+    case output_fmt::sci:
+        options = std::ios_base::scientific;
+        precision = 4;
+        width = 10;
+        break;
+
+    case output_fmt::scx:
+        options = std::ios_base::scientific;
+        precision = 8;
+        width = 18;
+        break;
+    }
+
+    strm.setf (options, std::ios_base::floatfield);
+    strm.precision (precision);
+
+    return width;
+}
 
 #pragma mark - SO(3)
 
@@ -386,8 +432,22 @@ SE3::elem() const {
 #pragma mark - OTHER FUNCTIONS
 
 std::string
-gpw::geometry::to_string (const SE3& T) {
-    return to_string (T.R()) + '\n' + to_string (T.p());
+gpw::geometry::to_string (const SE3& T, output_fmt fmt) {
+    std::stringstream strm {};
+
+    int width = set_format (strm, fmt);
+    for (size_t i = 0; i < 3; ++i) {
+        strm << "[ ";
+        for (size_t j = 0; j < 3; ++j) {
+            strm.width (width);
+            strm << T.R().elem()[j * 3 + i] << ", ";
+        }
+        strm << "] [";
+        strm.width (width);
+        strm << T.p().elem()[i] << " ]\n";
+    }
+
+    return strm.str();
 }
 
 template <typename T>

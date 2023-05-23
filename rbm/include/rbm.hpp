@@ -23,10 +23,15 @@
 #include "blat/blat.hpp"
 
 namespace gpw::geometry {
+
 const double EPS = 2.2204e-16;
 
 using vec3 = gpw::blat::vec<3>;
 using mat3 = gpw::blat::mat<3, 3>;
+
+enum class output_fmt { sht, nml, ext, sci, scx };
+int
+set_format (std::stringstream& strm, output_fmt fmt = output_fmt::nml);
 
 #pragma mark - SO(3)
 
@@ -141,7 +146,7 @@ private:
 #pragma mark - OTHER FUNCTIONS
 
 std::string
-to_string (const SE3&);
+to_string (const SE3&, output_fmt fmt = output_fmt::nml);
 
 vec3
 cross (const vec3&, const vec3&);
