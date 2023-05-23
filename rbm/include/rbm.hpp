@@ -229,6 +229,13 @@ operator!= (const SE3&, const SE3&);
 
 bool
 similar (
+    const SO3&,
+    const SO3&,
+    const double tol = std::numeric_limits<double>::epsilon()
+);
+
+bool
+similar (
     const SE3&,
     const SE3&,
     const double tol = std::numeric_limits<double>::epsilon()
