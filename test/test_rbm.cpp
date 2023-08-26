@@ -63,11 +63,9 @@ TEST(SO3, TransposeInverse) {
 
   SO3 I_3 = R * inv(R);
 
-  /*
   for (std::size_t i = 1; i < 4; ++i)
     for (std::size_t j = 1; j < 4; ++j)
       EXPECT_NEAR(I_3(i, j), I(i, j), 0.0001);
-      */
 }
 
 TEST(SO3, ExponentialLogarithm) {
