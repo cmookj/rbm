@@ -8,13 +8,9 @@
 //===----------------------------------------------------------------------===//
 
 #include "rbm.hpp"
+#include "blat/blat.hpp"
 
-#include <algorithm>
 #include <cstring>
-#include <exception>
-#include <functional>
-#include <limits>
-#include <numeric>
 
 #include <iostream>
 #include <sstream>
@@ -32,8 +28,7 @@ using namespace std;
 using namespace gpw::geometry;
 using namespace gpw::blat;
 
-int
-gpw::geometry::set_format (std::stringstream& strm, output_fmt fmt) {
+int gpw::geometry::set_format (std::stringstream& strm, output_fmt fmt) {
     int width;
     int precision;
 
@@ -143,8 +138,7 @@ SO3::SO3 (const mat3& M)
     }
 }
 
-SO3
-SO3::euler_zyx (double q1, double q2, double q3) {
+SO3 SO3::euler_zyx (double q1, double q2, double q3) {
     q1 *= M_PI / 180.;
     q2 *= M_PI / 180.;
     q3 *= M_PI / 180.;
@@ -173,8 +167,7 @@ SO3::euler_zyx (double q1, double q2, double q3) {
     return R;
 }
 
-SO3
-SO3::euler_zyz (double q1, double q2, double q3) {
+SO3 SO3::euler_zyz (double q1, double q2, double q3) {
     q1 *= M_PI / 180.;
     q2 *= M_PI / 180.;
     q3 *= M_PI / 180.;
@@ -203,8 +196,7 @@ SO3::euler_zyz (double q1, double q2, double q3) {
     return R;
 }
 
-SO3
-SO3::transpose() const {
+SO3 SO3::transpose() const {
     return SO3 {
         {_elem[0], _elem[1], _elem[2]},
         {_elem[3], _elem[4], _elem[5]},
@@ -212,13 +204,9 @@ SO3::transpose() const {
     };
 }
 
-SO3
-SO3::inv() const {
-    return transpose();
-}
+SO3 SO3::inv() const { return transpose(); }
 
-void
-SO3::_expm (double w1, double w2, double w3) {
+void SO3::_expm (double w1, double w2, double w3) {
     double theta = sqrt (w1 * w1 + w2 * w2 + w3 * w3);
     if (theta == 0.) {
         _elem[0] = 1.;
@@ -297,67 +285,46 @@ SE3::SE3 (
     );
 }
 
-const SO3&
-SE3::R() const {
-    return attitude;
-}
+const SO3& SE3::R() const { return attitude; }
 
-void
-SE3::set_R (const SO3& R) {
-    attitude = R;
-}
+void SE3::set_R (const SO3& R) { attitude = R; }
 
-const vec3&
-SE3::p() const {
-    return position;
-}
+const vec3& SE3::p() const { return position; }
 
-void
-SE3::set_p (const vec3& p) {
-    position = p;
-}
+void SE3::set_p (const vec3& p) { position = p; }
 
-const double&
-SE3::R (const std::size_t i, const std::size_t j) const {
+const double& SE3::R (const std::size_t i, const std::size_t j) const {
     if (3 < i || 3 < j)
         throw std::runtime_error ("Out of index");
 
     return attitude (i, j);
 }
 
-double&
-SE3::R (const std::size_t i, const std::size_t j) {
+double& SE3::R (const std::size_t i, const std::size_t j) {
     return const_cast<double&> (static_cast<const SE3&> (*this).R (i, j));
 }
 
-const double&
-SE3::p (const std::size_t i) const {
+const double& SE3::p (const std::size_t i) const {
     if (3 < i)
         throw std::runtime_error ("Out of index");
 
     return position (i);
 }
 
-double&
-SE3::p (const std::size_t i) {
+double& SE3::p (const std::size_t i) {
     return const_cast<double&> (static_cast<const SE3&> (*this).p (i));
 }
 
-SE3&
-SE3::operator*= (const SE3& T) {
+SE3& SE3::operator*= (const SE3& T) {
     position += attitude * T.p();
     attitude *= T.R();
 
     return *this;
 }
 
-vec3
-SE3::operator* (const vec3& v) const {
-    return attitude * v + position;
-}
+vec3 SE3::operator* (const vec3& v) const { return attitude * v + position; }
 
-void
-SE3::print (ostream& strm) const {
+void SE3::print (ostream& strm) const {
     strm.setf (ios_base::fixed, ios_base::floatfield);
     strm.precision (4);
 
@@ -378,8 +345,7 @@ SE3::print (ostream& strm) const {
     strm.width (0);
 }
 
-void
-SE3::_expm (vec3 w, vec3 v) {
+void SE3::_expm (vec3 w, vec3 v) {
     double theta = norm (w);
     if (theta != 0.) {
         attitude = SO3 {w};
@@ -402,8 +368,7 @@ SE3::_expm (vec3 w, vec3 v) {
     }
 }
 
-vector<double>
-SE3::elem() const {
+vector<double> SE3::elem() const {
     vector<double> elm (16, 0);
 
     elm[0] = attitude.elem()[0];
@@ -431,8 +396,7 @@ SE3::elem() const {
 
 #pragma mark - OTHER FUNCTIONS
 
-std::string
-gpw::geometry::to_string (const SE3& T, output_fmt fmt) {
+std::string gpw::geometry::to_string (const SE3& T, output_fmt fmt) {
     std::stringstream strm {};
 
     int width = set_format (strm, fmt);
@@ -451,8 +415,7 @@ gpw::geometry::to_string (const SE3& T, output_fmt fmt) {
 }
 
 template <typename T>
-bool
-gpw::geometry::similar (const T& a, const T& b, const T tol) {
+bool gpw::geometry::similar (const T& a, const T& b, const T tol) {
     if (fabs (a - b) < tol)
         return true;
     else
@@ -465,8 +428,7 @@ gpw::geometry::similar<float> (const float&, const float&, const float tol);
 template bool
 gpw::geometry::similar<double> (const double&, const double&, const double tol);
 
-vec3
-gpw::geometry::cross (const vec3& a, const vec3& b) {
+vec3 gpw::geometry::cross (const vec3& a, const vec3& b) {
     return vec3 {
         {a[1] * b[2] - a[2] * b[1],
          a[2] * b[0] - a[0] * b[2],
@@ -474,53 +436,44 @@ gpw::geometry::cross (const vec3& a, const vec3& b) {
     };
 }
 
-mat3
-gpw::geometry::skew (const double& v1, const double& v2, const double& v3) {
+mat3 gpw::geometry::skew (
+    const double& v1, const double& v2, const double& v3
+) {
     mat3 m {
-        { 0.,  v3, -v2},
-        {-v3,  0.,  v1},
-        { v2, -v1,  0.}
+        { 0., -v3,  v2},
+        { v3,  0., -v1},
+        {-v2,  v1,  0.}
     };
 
     return m;
 }
 
-mat3
-gpw::geometry::skew (const vec3& v) {
-    return skew (v (1), v (2), v (3));
-}
+mat3 gpw::geometry::skew (const vec3& v) { return skew (v (1), v (2), v (3)); }
 
-SO3
-gpw::geometry::operator* (const SO3& R1, const SO3& R2) {
+SO3 gpw::geometry::operator* (const SO3& R1, const SO3& R2) {
     auto R = gpw::blat::operator* (R1, R2);
     return SO3 (R);
 }
 
-vec3
-gpw::geometry::operator* (const SO3& R, const vec3& v) {
+vec3 gpw::geometry::operator* (const SO3& R, const vec3& v) {
     auto Rv = gpw::blat::operator* (R, v);
     return vec3 (std::move (Rv.elem()));
 }
 
-SO3
-gpw::geometry::expm (const double w1, const double w2, const double w3) {
+SO3 gpw::geometry::expm (const double w1, const double w2, const double w3) {
     return SO3 (w1, w2, w3);
 }
 
-SO3
-gpw::geometry::expm (const vec3& w) {
-    return SO3 (w (1), w (2), w (3));
-}
+SO3 gpw::geometry::expm (const vec3& w) { return SO3 (w (1), w (2), w (3)); }
 
-vec3
-gpw::geometry::logm (const SO3& R) {
-    vec3 w;
+so3 gpw::geometry::logm (const SO3& R) {
+    so3 w;
     double theta = 0.;
     double trace = tr (R);
     if (trace == 3)
         return w;
 
-    vec3 zero;
+    so3 zero;
     if (trace == -1) {
         theta = M_PI;
         w (1) = R (1, 3);
@@ -551,31 +504,68 @@ gpw::geometry::logm (const SO3& R) {
     w (2) = R (1, 3) - R (3, 1);
     w (3) = -R (1, 2) + R (2, 1);
     w *= theta / (2. * sin (theta));
+
     return w;
 }
 
-SO3
-gpw::geometry::transpose (const SO3& R) {
-    return R.transpose();
+se3 gpw::geometry::logm (const SE3& T) {
+    // Given (R, p) written as T in SE(3), find a q in [0, pi] and a screw axis
+    // S = (w, v) in R^6 (where at least one of |w| and |v| is unity) such that
+    // exp([S]q) = T.
+    //
+    // If R = I, then set w = 0, v = p/|p|, and q = |p|.
+    // Otherwise, use the matrix logarithm on SO(3) to determine w and q for R.
+    // Then v is calculated as
+    // v = G^{-1}(q)p,
+    // where
+    // G^{-1}(q) = 1/q I - 1/2[w] + (1/q - 1/2 cot(q/2))[w]^2.
+    se3 m;
+
+    // When R = I:
+    if (T.R() == identity<3>()) {
+        m (1) = m (2) = m (3) = 0.;
+        m (4) = T.p (1);
+        m (5) = T.p (2);
+        m (6) = T.p (3);
+
+        return m;
+    }
+
+    // Otherwise:
+    auto w = logm (T.R());
+    double q = norm (w);
+
+    m (1) = w (1);
+    m (2) = w (2);
+    m (3) = w (3);
+
+    mat3 W = skew (w / q);
+
+    mat3 Ginv =
+        identity<3>() - q * W / 2. + (1 - q / (2. * tan (q / 2))) * W * W;
+
+    auto v = Ginv * T.p();
+
+    m (4) = v (1);
+    m (5) = v (2);
+    m (6) = v (3);
+
+    return m;
 }
 
-SO3
-gpw::geometry::inv (const SO3& R) {
-    return R.inv();
-}
+SO3 gpw::geometry::transpose (const SO3& R) { return R.transpose(); }
 
-SO3
-gpw::geometry::relative (const SO3& R1, const SO3& R2) {
+SO3 gpw::geometry::inv (const SO3& R) { return R.inv(); }
+
+SO3 gpw::geometry::relative (const SO3& R1, const SO3& R2) {
     return inv (R1) * R2;
 }
 
-vec3
-gpw::geometry::geodesic (const SO3& R1, const SO3& R2) {
+vec3 gpw::geometry::geodesic (const SO3& R1, const SO3& R2) {
     return logm (relative (R1, R2));
 }
 
-vector<vector<vec3>>
-gpw::geometry::interpolate (
+vector<vector<vec3>> gpw::geometry::interpolate (
     const vector<double>& t,
     const vector<SO3>& R,
     const vec3& omega,
@@ -653,8 +643,7 @@ gpw::geometry::interpolate (
     return abc;
 }
 
-SO3
-gpw::geometry::rotation_interpolated (
+SO3 gpw::geometry::rotation_interpolated (
     const double t,
     const vector<double>& ts,
     const vector<SO3>& R,
@@ -679,8 +668,7 @@ gpw::geometry::rotation_interpolated (
                       );
 }
 
-SE3
-gpw::geometry::expm (
+SE3 gpw::geometry::expm (
     const double w1,
     const double w2,
     const double w3,
@@ -691,63 +679,47 @@ gpw::geometry::expm (
     return SE3 {w1, w2, w3, v1, v2, v3};
 }
 
-SE3
-gpw::geometry::expm (const vec3& w, const vec3& v) {
-    return SE3 {w, v};
-}
+SE3 gpw::geometry::expm (const vec3& w, const vec3& v) { return SE3 {w, v}; }
 
-SE3
-gpw::geometry::operator* (SE3 a, SE3 b) {
-    return a *= b;
-}
+SE3 gpw::geometry::operator* (SE3 a, SE3 b) { return a *= b; }
 
-SE3
-gpw::geometry::inv (const SE3& T) {
+SE3 gpw::geometry::inv (const SE3& T) {
     return SE3 {inv (T.R()), -inv (T.R()) * T.p()};
 }
 
-SE3
-gpw::geometry::relative (const SE3& T1, const SE3& T2) {
+SE3 gpw::geometry::relative (const SE3& T1, const SE3& T2) {
     return SE3 {inv (T1) * T2};
 }
 
-bool
-gpw::geometry::operator== (const SE3& T, const gpw::blat::mat<4, 4>& M) {
+bool gpw::geometry::operator== (const SE3& T, const gpw::blat::mat<4, 4>& M) {
     return (T.elem() == M.elem());
 }
 
-bool
-gpw::geometry::operator== (const gpw::blat::mat<4, 4>& M, const SE3& T) {
+bool gpw::geometry::operator== (const gpw::blat::mat<4, 4>& M, const SE3& T) {
     return T == M;
 }
 
-bool
-gpw::geometry::operator!= (const SE3& T, const gpw::blat::mat<4, 4>& M) {
+bool gpw::geometry::operator!= (const SE3& T, const gpw::blat::mat<4, 4>& M) {
     return !(T == M);
 }
 
-bool
-gpw::geometry::operator!= (const gpw::blat::mat<4, 4>& M, const SE3& T) {
+bool gpw::geometry::operator!= (const gpw::blat::mat<4, 4>& M, const SE3& T) {
     return !(M == T);
 }
 
-bool
-gpw::geometry::operator== (const SE3& T1, const SE3& T2) {
+bool gpw::geometry::operator== (const SE3& T1, const SE3& T2) {
     return (T1.R() == T2.R() && T1.p() == T2.p());
 }
 
-bool
-gpw::geometry::operator!= (const SE3& T1, const SE3& T2) {
+bool gpw::geometry::operator!= (const SE3& T1, const SE3& T2) {
     return !(T1 == T2);
 }
 
-bool
-gpw::geometry::similar (const SO3& R1, const SO3& R2, const double tol) {
+bool gpw::geometry::similar (const SO3& R1, const SO3& R2, const double tol) {
     return gpw::blat::similar (R1, R2, tol);
 }
 
-bool
-gpw::geometry::similar (const SE3& T1, const SE3& T2, const double tol) {
+bool gpw::geometry::similar (const SE3& T1, const SE3& T2, const double tol) {
     return gpw::blat::similar (T1.R(), T2.R(), tol) &&
            gpw::blat::similar (T1.p(), T2.p(), tol);
 }

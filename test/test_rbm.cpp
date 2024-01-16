@@ -270,6 +270,43 @@ TEST (SE3, Inverse) {
     }
 }
 
+TEST (SE3, ExponentialLogarithm) {
+    vec3 w0 {1.57079632, 0., 0.};
+    vec3 v0 {0., 2.35619449, 2.35619449};
+    auto T0 = expm (w0, v0);
+    mat<4, 4> T0_ref {
+  // clang-format off
+        {1.0, 0.0, 0.0, 0.0},
+        {0.0, 0.000000006794896756368018486683, -1.0, 0.000000010192345177809684363307},
+        {0.0, 1.0, 0.000000006794896756368018486683, 3.0},
+        {0.0, 0.0, 0.0, 1.0}
+  // clang-format on
+    };
+    for (std::size_t i = 1; i < 4; ++i) {
+        for (std::size_t j = 1; j < 4; ++j) {
+            EXPECT_FLOAT_EQ (T0_ref (i, j), T0.R (i, j));
+        }
+        EXPECT_FLOAT_EQ (T0_ref (i, 4), T0.p (i));
+    }
+
+    SO3 R1 {
+        {1, 0,  0},
+        {0, 0, -1},
+        {0, 1,  0}
+    };
+    vec3 p1 {0, 0, 3};
+    SE3 T1 {R1, p1};
+
+    auto t1 = logm (T1);
+    EXPECT_FLOAT_EQ (t1 (1), w0 (1));
+    EXPECT_FLOAT_EQ (t1 (2), w0 (2));
+    EXPECT_FLOAT_EQ (t1 (3), w0 (3));
+
+    EXPECT_FLOAT_EQ (t1 (4), 0.);
+    EXPECT_FLOAT_EQ (t1 (5), 2.356194490192344836998472601408);
+    EXPECT_FLOAT_EQ (t1 (6), 2.356194490192344836998472601408);
+}
+
 TEST (SE3, Multiplication) {
     // First test
     vec3 w1 {1, 2, 3};
