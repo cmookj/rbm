@@ -14,7 +14,7 @@ if (BUILD_TESTING)
     endif()
     target_link_libraries(test_rbm PRIVATE 
         rbm 
-        /usr/local/lib/libblat.a
+        /usr/local/lib/libvma.a
         ${extra_libs}
         GTest::gtest_main)
 
