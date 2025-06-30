@@ -1,8 +1,8 @@
-# RBMlib: Rigid Body Motion Library
+# rbm: Rigid Body Motion Library
 A library to handle rigid body motion in 3D space using Lie Group.
 
 ## Dependancies
-* This library depends on [BLATlib](https://github.com/cmookj/BLATlib) for basic linear algebra.  The linear algebra routines depend on 
+* This library depends on [vma](https://github.com/cmookj/vma) for basic linear algebra.  The linear algebra routines depend on 
   - Apple's Accelerate framework on macOS, iOS, etc.
   - libopenblas and libgfortran on other OSes, behind the scene.
 * For unit test, this repository automatically fetches Google's GTest toolkit.
