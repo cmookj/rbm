@@ -553,7 +553,7 @@ gpw::geometry::logm (const SE3& T) {
     se3 m;
 
     // When R = I:
-    if (T.R() == identity<3>()) {
+    if (T.R() == gpw::vma::identity<3>()) {
         m (1) = m (2) = m (3) = 0.;
         m (4)                 = T.p (1);
         m (5)                 = T.p (2);
@@ -572,7 +572,7 @@ gpw::geometry::logm (const SE3& T) {
 
     mat3 W = skew (w / q);
 
-    mat3 Ginv = identity<3>() - q * W / 2. + (1 - q / (2. * tan (q / 2))) * W * W;
+    mat3 Ginv = gpw::vma::identity<3>() - q * W / 2. + (1 - q / (2. * tan (q / 2))) * W * W;
 
     auto v = Ginv * T.p();
 
