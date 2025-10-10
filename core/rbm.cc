@@ -7,8 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "rbm.hpp"
-#include "vma/vma.hpp"
+#include "core/rbm.h"
+#include "core/vma.h"
 
 #include <cstring>
 
