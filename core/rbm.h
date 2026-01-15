@@ -20,7 +20,7 @@
 // #include <type_traits>
 #include <vector>
 
-#include "vma/vma.hpp"
+#include "core/vma.h"
 
 namespace gpw::geometry {
 
@@ -44,41 +44,41 @@ set_format (std::stringstream& strm, output_fmt fmt = output_fmt::nml);
  in column-major order.
  */
 class SO3 : public mat3 {
-  public:
-    // Default constructor and destructor
-    SO3 ();
-    virtual ~SO3 () = default;
+public:
+  // Default constructor and destructor
+  SO3 ();
+  virtual ~SO3 () = default;
 
-    // Copy constructor and assignment
-    SO3 (const SO3&) = default;
-    SO3&
-    operator= (const SO3&) = default;
+  // Copy constructor and assignment
+  SO3 (const SO3&) = default;
+  SO3&
+  operator= (const SO3&) = default;
 
-    // Move constructor and assignment
-    SO3 (SO3&&) noexcept = default;
-    SO3&
-    operator= (SO3&&) noexcept = default;
+  // Move constructor and assignment
+  SO3 (SO3&&) noexcept = default;
+  SO3&
+  operator= (SO3&&) noexcept = default;
 
-    // Other constructors
-    SO3 (const std::initializer_list<std::initializer_list<double>>&);
-    SO3 (const double&, const double&, const double&);
-    SO3 (const vec3&, const double&);
-    SO3 (const vec3&);
-    SO3 (const mat3&);
+  // Other constructors
+  SO3 (const std::initializer_list<std::initializer_list<double>>&);
+  SO3 (const double&, const double&, const double&);
+  SO3 (const vec3&, const double&);
+  SO3 (const vec3&);
+  SO3 (const mat3&);
 
-    static SO3
-    euler_zyx (double, double, double);
-    static SO3
-    euler_zyz (double, double, double);
+  static SO3
+  euler_zyx (double, double, double);
+  static SO3
+  euler_zyz (double, double, double);
 
-    SO3
-    transpose () const;
-    SO3
-    inv () const;
+  SO3
+  transpose () const;
+  SO3
+  inv () const;
 
-  private:
-    void
-    _expm (double, double, double);
+private:
+  void
+  _expm (double, double, double);
 };
 
 #pragma mark - SE(3)
@@ -87,62 +87,62 @@ class SO3 : public mat3 {
  @brief SE(3): Special Euclidean Matrix in 3-Dimensional Space
  */
 class SE3 {
-  private:
-    SO3  attitude;
-    vec3 position;
+private:
+  SO3  attitude;
+  vec3 position;
 
-  public:
-    // Default constructor and destructor
-    SE3 ();
-    virtual ~SE3 () = default;
+public:
+  // Default constructor and destructor
+  SE3 ();
+  virtual ~SE3 () = default;
 
-    // Copy constructor and assignment
-    SE3 (const SE3&) = default;
-    SE3&
-    operator= (const SE3&) = default;
+  // Copy constructor and assignment
+  SE3 (const SE3&) = default;
+  SE3&
+  operator= (const SE3&) = default;
 
-    // Move constructor and assignment
-    SE3 (SE3&&) noexcept = default;
-    SE3&
-    operator= (SE3&&) noexcept = default;
+  // Move constructor and assignment
+  SE3 (SE3&&) noexcept = default;
+  SE3&
+  operator= (SE3&&) noexcept = default;
 
-    // Other constructors
-    SE3 (const SO3&, const vec3&);
-    SE3 (const vec3&, const vec3&);
-    SE3 (const double&, const double&, const double&, const double&, const double&, const double&);
+  // Other constructors
+  SE3 (const SO3&, const vec3&);
+  SE3 (const vec3&, const vec3&);
+  SE3 (const double&, const double&, const double&, const double&, const double&, const double&);
 
-    const SO3&
-    R () const;
-    void
-    set_R (const SO3&);
-    const vec3&
-    p () const;
-    void
-    set_p (const vec3&);
+  const SO3&
+  R () const;
+  void
+  set_R (const SO3&);
+  const vec3&
+  p () const;
+  void
+  set_p (const vec3&);
 
-    const double&
-    R (const std::size_t, const std::size_t) const;
-    double&
-    R (const std::size_t, const std::size_t);
+  const double&
+  R (const std::size_t, const std::size_t) const;
+  double&
+  R (const std::size_t, const std::size_t);
 
-    const double&
-    p (const std::size_t) const;
-    double&
-    p (const std::size_t);
+  const double&
+  p (const std::size_t) const;
+  double&
+  p (const std::size_t);
 
-    SE3&
-    operator*= (const SE3&);
-    vec3
-    operator* (const vec3&) const;
+  SE3&
+  operator*= (const SE3&);
+  vec3
+  operator* (const vec3&) const;
 
-    void
-    print (std::ostream& strm = std::cout) const;
+  void
+  print (std::ostream& strm = std::cout) const;
 
-    std::vector<double>
-    elem () const;
+  std::vector<double>
+  elem () const;
 
-  private:
-    void _expm (vec3, vec3);
+private:
+  void _expm (vec3, vec3);
 };
 
 #pragma mark - OTHER FUNCTIONS
