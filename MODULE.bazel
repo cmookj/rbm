@@ -10,5 +10,5 @@ bazel_dep(name = "vma", version = "0.0.1")
 git_override(
   module_name = "vma",
   remote = "https://github.com/cmookj/vma.git",
-  commit = "e389949",
+  commit = "be5906d",
 )
